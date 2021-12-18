@@ -16,43 +16,36 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
 
         private void guessValidation(string i_Guess)
         {
-            foreach(char letter in i_Guess)
+            foreach (char letter in i_Guess)
             {
                 if (!Char.IsLetter(letter))
                 {
                     throw new TypeException("guess wrong type");
                 }
-                if(!s_guessRangeArray.Contains(letter))
+                if (!s_guessRangeArray.Contains(letter))
                 {
                     throw new RangeException("guess out of array range 'A' - 'H'");
                 }
             }
         }
 
-        public string userGuess { 
+        public string userGuess
+        {
             get
             {
                 return m_Guess;
-            } 
+            }
             set
             {
-                try
-                {
-                    guessValidation(value);
-                    m_Guess = value;
-                }
-                catch (TypeException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                catch (RangeException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
 
-
+                guessValidation(value);
+                m_Guess = value;
             }
-        }
 
+
+
+        }
     }
+
 }
+

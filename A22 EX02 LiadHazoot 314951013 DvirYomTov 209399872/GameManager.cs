@@ -25,10 +25,21 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         public void GameManage()
         {
             int numberOfGuesses = getNumberOfGuesses();
- 
+            List<Guess> userGuessesList = new List<Guess>();
+            for(int i = 0; i < numberOfGuesses; i++)
+            {
+                userGuessesList.Add(getGuess());
+            }
 
+            printList(userGuessesList);
         }
-
+        private void printList(List<Guess> list)
+        {
+            foreach (Guess item in list)
+            {
+                Console.WriteLine(item.userGuess);
+            }
+        }
         private Guess getGuess()
         {
             bool isInputValid = false;
