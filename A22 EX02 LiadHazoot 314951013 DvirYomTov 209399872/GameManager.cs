@@ -26,12 +26,25 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         {
             int numberOfGuesses = getNumberOfGuesses();
             List<Guess> userGuessesList = new List<Guess>();
-            for(int i = 0; i < numberOfGuesses; i++)
+            List<string> pointsList = new List<string>();
+            string point = "";
+            Logic logic = new Logic();
+            string comChoose = logic.ComChooseRandomly();
+            Console.WriteLine(comChoose);
+            for (int i = 0; i < numberOfGuesses; i++)
             {
                 userGuessesList.Add(getGuess());
+                point = logic.BingoHit(userGuessesList[userGuessesList.Count - 1]);
+                pointsList.Add(point);
             }
 
             printList(userGuessesList);
+            Console.WriteLine();
+            Console.WriteLine("---------------");
+            Console.WriteLine();
+
+            pointsList.ForEach(Console.WriteLine);
+
         }
         private void printList(List<Guess> list)
         {
@@ -106,16 +119,16 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         }
 
     }
-    public class RangeException : Exception
-    {
-        public RangeException(string message)
-            : base(message)
-        { }
-    }
-    public class TypeException : Exception
-    {
-        public TypeException(string message)
-            : base(message)
-        { }
-    }
+    //public class RangeException : Exception
+    //{
+    //    public RangeException(string message)
+    //        : base(message)
+    //    { }
+    //}
+    //public class TypeException : Exception
+    //{ 
+    //    public TypeException(string message)
+    //        : base(message)
+    //    { }
+    //}
 }
