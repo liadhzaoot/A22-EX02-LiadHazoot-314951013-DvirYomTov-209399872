@@ -10,6 +10,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
     {
         public static char[] s_guessRangeArray = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
         private string m_Guess;
+        private const int k_NumberOfLettersInGuess = 4;
         public Guess()
         {
         }
@@ -22,9 +23,9 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 {
                     throw new TypeException("guess wrong type");
                 }
-                if (!s_guessRangeArray.Contains(letter))
+                if (!s_guessRangeArray.Contains(letter) || i_Guess.Length != k_NumberOfLettersInGuess)
                 {
-                    throw new RangeException("guess out of array range 'A' - 'H'");
+                    throw new RangeException("guess have to be 4 letter and in range 'A' - 'H'");
                 }
             }
         }

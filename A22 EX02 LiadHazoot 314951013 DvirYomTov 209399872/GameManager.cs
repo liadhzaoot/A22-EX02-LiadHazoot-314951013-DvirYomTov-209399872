@@ -10,6 +10,13 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
     {
         private const int k_MinNumberOfGuesses = 4;
         private const int k_MaxNumberOfGuesses = 10;
+        private bool m_IsWin = false;
+        private bool m_IsRestart = true;
+        private bool m_IsQuit = false;
+        private List<Guess> m_UserGuessesList = new List<Guess>();
+        private Guess m_UserGuess = null;
+        private List<string> m_PointsList = new List<string>();
+        private Logic m_Logic;
 
         static void Main(string[] args)
         {
@@ -18,33 +25,121 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         }
         public GameManager()
         {
-            
-
-
+            m_Logic = new Logic();
         }
         public void GameManage()
         {
-            int numberOfGuesses = getNumberOfGuesses();
-            List<Guess> userGuessesList = new List<Guess>();
-            List<string> pointsList = new List<string>();
             string point = "";
-            Logic logic = new Logic();
-            string comChoose = logic.ComChooseRandomly();
-            Console.WriteLine(comChoose);
-            for (int i = 0; i < numberOfGuesses; i++)
+            while (m_IsRestart && !m_IsQuit)
             {
-                userGuessesList.Add(getGuess());
-                point = logic.BingoHit(userGuessesList[userGuessesList.Count - 1]);
-                pointsList.Add(point);
+                int numberOfGuesses = getNumberOfGuesses();
+                string comChoose = m_Logic.ComChooseRandomly();
+                // ------------------my check---------------------------------
+                Console.WriteLine(comChoose);
+                // -----------------------------------------------------------
+
+                for (int i = 0; i < numberOfGuesses; i++)
+                {
+                    m_UserGuess = getGuess();
+                    if (m_UserGuess == null)
+                    {
+                        m_IsQuit = true;
+                        break;
+                    }
+                    m_UserGuessesList.Add(m_UserGuess); // add guess
+                    point = m_Logic.BingoHit(m_UserGuessesList[m_UserGuessesList.Count - 1]);
+                    m_PointsList.Add(point); // add point 'X' OR 'V'
+                    if (m_Logic.IsWin(point)) // check win
+                    {
+                        Console.WriteLine("You guessed after " + (i + 1) + " steps!");
+
+
+                        // ------------------my check---------------------------------
+                        printList(m_UserGuessesList);
+                        Console.WriteLine();
+                        Console.WriteLine("--------------------");
+                        Console.WriteLine();
+                        m_PointsList.ForEach(Console.WriteLine);
+                        // -----------------------------------------------------------
+
+
+                        m_IsRestart = restartGame();
+                        m_IsWin = true;
+                        break;
+                    }
+                }
+
+
+                // ------------------my check---------------------------------
+                if (!m_IsRestart && !m_IsWin)
+                {
+                    printList(m_UserGuessesList);
+                    Console.WriteLine();
+                    Console.WriteLine("--------------------");
+                    Console.WriteLine();
+                    m_PointsList.ForEach(Console.WriteLine);
+                }
+                // -----------------------------------------------------------
+
+
+
+                if (!m_IsWin && !m_IsQuit) // if the user Lose and not quit :(
+                {
+                    Console.WriteLine("No more guesses allowed. You Lost.");
+                    m_IsRestart = restartGame();
+                }
+                if (m_IsQuit)
+                {
+                    Console.WriteLine("Bye Bye :(");
+                }
+
+             
             }
+        }
+        /// <summary>
+        ///  restart the game
+        /// </summary>
+        private bool restartGame()
+        {
+            bool isInvalideChoose = true;
+            bool isRestart = false;
+            while (isInvalideChoose)
+            {
 
-            printList(userGuessesList);
-            Console.WriteLine();
-            Console.WriteLine("---------------");
-            Console.WriteLine();
 
-            pointsList.ForEach(Console.WriteLine);
+                Console.WriteLine("Would you like to start a new game? <Y/N>");
+                string chooseStr = Console.ReadLine();
+                char choose;
+                bool intResultTryParse = char.TryParse(chooseStr, out choose);
 
+                if (intResultTryParse && choose.Equals('Y'))
+                {
+                    isRestart = true;
+                    isInvalideChoose = false;
+
+                    restartFields();
+                }
+                else if (intResultTryParse && choose.Equals('N'))
+                {
+                    Console.WriteLine("Bye Bye");
+                    isInvalideChoose = false;
+                    isRestart = false;
+                }
+                else
+                {
+                    Console.WriteLine("invalid input :(");
+                }
+            }
+            return isRestart;
+
+        }
+        private void restartFields()
+        {
+            m_IsWin = false;
+            m_IsQuit = false;
+            m_Logic.SetComChoose("");
+            m_UserGuessesList.Clear();
+            m_PointsList.Clear();
         }
         private void printList(List<Guess> list)
         {
@@ -56,7 +151,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         private Guess getGuess()
         {
             bool isInputValid = false;
-            Guess guess; // add '?'
+            Guess guess = null; // add '?'
             guess = new Guess();
             while (!isInputValid)
             {
@@ -73,7 +168,15 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 }
                 catch (RangeException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    if (numberOfGuessesStr.Equals("Q"))
+                    {
+                        guess = null;
+                        isInputValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
             return guess;

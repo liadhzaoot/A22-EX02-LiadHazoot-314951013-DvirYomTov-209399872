@@ -64,12 +64,19 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         public bool IsWin(string i_points)
         {
             bool isWin = true;
-            foreach(char letter in i_points)
+            if (i_points.Length == k_NumberOfLettersInComGuess)
             {
-                if (letter != 'V')
+                foreach (char letter in i_points)
                 {
-                    isWin = false;
+                    if (letter != 'V')
+                    {
+                        isWin = false;
+                    }
                 }
+            }
+            else
+            {
+                isWin = false;
             }
             return isWin;
         }
