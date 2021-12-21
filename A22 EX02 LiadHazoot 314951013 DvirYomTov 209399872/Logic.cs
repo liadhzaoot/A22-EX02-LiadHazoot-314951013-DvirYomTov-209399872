@@ -61,6 +61,8 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             }
             return points;
         }
+
+        
         public bool IsWin(string i_points)
         {
             bool isWin = true;
