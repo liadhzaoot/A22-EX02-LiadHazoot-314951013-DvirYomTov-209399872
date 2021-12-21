@@ -40,9 +40,9 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
 
         }
 
-        private void drawHeader()
+        private void drawHeader()                //draw the 2 first lines
         {
-            Console.WriteLine("Current board status:\n");
+            Console.WriteLine("Current board status:\n");  
             Console.WriteLine("|Pins:    |Result:  |");
             Console.WriteLine("|=========|=========|");
             Console.WriteLine("| # # # # |         |");
@@ -84,7 +84,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         //}
 
 
-
+        
 
     }
 
