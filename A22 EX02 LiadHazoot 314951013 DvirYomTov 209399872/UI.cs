@@ -15,12 +15,17 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             m_BoardSize = i_BoardSize;
         }
 
-        public void DrawBoard(List<Guess> i_userGuessesList, List<string> i_resultsList)
+        public void DrawBoard(ref List<Guess> i_userGuessesList, ref List<string> i_resultsList)
         {
-            Ex02.ConsoleUtils.Screen.Clear();
+            this.ClearBoard();
             this.drawHeader();
             this.drawGuessesAndResults(ref i_userGuessesList, ref i_resultsList);
  
+        }
+
+        public void ClearBoard()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
         }
 
         private void drawGuessesAndResults(ref List<Guess> i_userGuessesList, ref List<string> i_resultsList)

@@ -40,7 +40,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 for (int i = 0; i < numberOfGuesses; i++)
                 {
                     
-                    m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                    m_UI.DrawBoard(ref m_UserGuessesList, ref m_ResultsList);
                     //Console.WriteLine(comChoose);
                     UI.PrintMessage("\nPlease type your next guess or 'Q' to quit");
                     m_UserGuess = getGuess();
@@ -54,7 +54,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                     m_ResultsList.Add(result); // add result 'X' OR 'V'
                     if (m_Logic.IsWin(result)) // check win
                     {
-                        m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                        m_UI.DrawBoard(ref m_UserGuessesList, ref m_ResultsList);
                         UI.PrintMessage("You guessed after " + (i + 1) + " steps!");
                         m_IsRestart = restartGame();
                         m_IsWin = true;
@@ -64,7 +64,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
 
                 if (!m_IsWin && !m_IsQuit) // if the user Lose and not quit :(
                 {
-                    m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                    m_UI.DrawBoard(ref m_UserGuessesList, ref m_ResultsList);
                     UI.PrintMessage("No more guesses allowed. You Lost.");
                     m_IsRestart = restartGame();
                 }
@@ -94,7 +94,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 {
                     isRestart = true;
                     isInvalideChoose = false;
-
+                    this.m_UI.ClearBoard();
                     restartFields();
                 }
                 else if (intResultTryParse && choose.Equals('N'))
