@@ -19,11 +19,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         private Logic m_Logic;
         private UI m_UI;
 
-        static void Main(string[] args)
-        {
-            GameManager gm = new GameManager();
-            gm.GameManage();
-        }
+      
         public GameManager()
         {
             m_Logic = new Logic();

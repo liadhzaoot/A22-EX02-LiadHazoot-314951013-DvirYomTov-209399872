@@ -39,6 +39,7 @@
     <Compile Include="GameManager.cs" />
     <Compile Include="Guess.cs" />
     <Compile Include="Logic.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="RangeException.cs" />
     <Compile Include="TypeException.cs" />
     <Compile Include="UI.cs" />
