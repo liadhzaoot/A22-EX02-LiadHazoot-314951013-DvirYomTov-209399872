@@ -15,30 +15,35 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             m_BoardSize = i_BoardSize;
         }
 
-        public void DrawBoard(List<Guess> i_userGuessesList, List<string> i_pointsList)
+        public void DrawBoard(List<Guess> i_userGuessesList, List<string> i_resultsList)
         {
             Ex02.ConsoleUtils.Screen.Clear();
             this.drawHeader();
+            this.drawGuessesAndResults(ref i_userGuessesList, ref i_resultsList);
+ 
+        }
 
+        private void drawGuessesAndResults(ref List<Guess> i_userGuessesList, ref List<string> i_resultsList)
+        {
             for (int i = 0; i < this.m_BoardSize; i++)
             {
                 if (i < i_userGuessesList.Count)
                 {
                     string line = string.Format("|{0}|{1}|", fixStringLength(i_userGuessesList[i].userGuess)
-                        , fixStringLength(i_pointsList[i]));
+                        , fixStringLength(i_resultsList[i]));
                     Console.WriteLine(line);
-                    Console.WriteLine("|=========|=========|");
                 }
 
                 else
                 {
                     Console.WriteLine("|         |         |");
-                    Console.WriteLine("|=========|=========|");
                 }
-            }
-            
 
+                Console.WriteLine("|=========|=========|");
+            }
         }
+
+        
 
         private void drawHeader()                //draw the 2 first lines
         {
@@ -84,7 +89,10 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         //}
 
 
-        
+        public static void PrintMessage(string i_Message)
+        {
+            Console.WriteLine(i_Message);
+        }
 
     }
 

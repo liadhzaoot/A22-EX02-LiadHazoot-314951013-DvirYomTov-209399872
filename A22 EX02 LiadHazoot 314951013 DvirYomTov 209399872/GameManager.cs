@@ -15,7 +15,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         private bool m_IsQuit = false;
         private List<Guess> m_UserGuessesList = new List<Guess>();
         private Guess m_UserGuess = null;
-        private List<string> m_PointsList = new List<string>();
+        private List<string> m_ResultsList = new List<string>();
         private Logic m_Logic;
         private UI m_UI;
 
@@ -30,21 +30,23 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         }
         public void GameManage()
         {
-            string point = "";
+            string result = "";
             while (m_IsRestart && !m_IsQuit)
             {
                 int numberOfGuesses = getNumberOfGuesses();
                 string comChoose = m_Logic.ComChooseRandomly();
                 // ------------------my check---------------------------------
-                //Console.WriteLine(comChoose);
+                Console.WriteLine(comChoose);
                 // -----------------------------------------------------------
                 m_UI = new UI(numberOfGuesses);
                 
-
+               
                 for (int i = 0; i < numberOfGuesses; i++)
                 {
-                    m_UI.DrawBoard(m_UserGuessesList, m_PointsList);
-                    Console.WriteLine("\nPlease type your next guess or 'Q' to quit");
+                    
+                    m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                    //Console.WriteLine(comChoose);
+                    UI.PrintMessage("\nPlease type your next guess or 'Q' to quit");
                     m_UserGuess = getGuess();
                     if (m_UserGuess == null)
                     {
@@ -52,54 +54,28 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                         break;
                     }
                     m_UserGuessesList.Add(m_UserGuess); // add guess
-                    point = m_Logic.BingoHit(m_UserGuessesList[m_UserGuessesList.Count - 1]);
-                    m_PointsList.Add(point); // add point 'X' OR 'V'
-                    if (m_Logic.IsWin(point)) // check win
+                    result = m_Logic.BingoHit(m_UserGuessesList[m_UserGuessesList.Count - 1]);
+                    m_ResultsList.Add(result); // add result 'X' OR 'V'
+                    if (m_Logic.IsWin(result)) // check win
                     {
-                        Console.WriteLine("You guessed after " + (i + 1) + " steps!");
-
-
-                        // ------------------my check---------------------------------
-                        //printList(m_UserGuessesList);
-                        //Console.WriteLine();
-                        //Console.WriteLine("--------------------");
-                        //Console.WriteLine();
-                        //m_PointsList.ForEach(Console.WriteLine);
-                        // -----------------------------------------------------------
-
-                        m_UI.DrawBoard(m_UserGuessesList, m_PointsList);
+                        m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                        UI.PrintMessage("You guessed after " + (i + 1) + " steps!");
                         m_IsRestart = restartGame();
                         m_IsWin = true;
                         break;
                     }
                 }
 
-
-                // ------------------my check---------------------------------
-                //if (!m_IsRestart && !m_IsWin)
-                //{
-                //    printList(m_UserGuessesList);
-                //    Console.WriteLine();
-                //    Console.WriteLine("--------------------");
-                //    Console.WriteLine();
-                //    m_PointsList.ForEach(Console.WriteLine);
-                //}
-                // -----------------------------------------------------------
-
-
-
                 if (!m_IsWin && !m_IsQuit) // if the user Lose and not quit :(
                 {
-                    m_UI.DrawBoard(m_UserGuessesList, m_PointsList);
-                    Console.WriteLine("No more guesses allowed. You Lost.");
+                    m_UI.DrawBoard(m_UserGuessesList, m_ResultsList);
+                    UI.PrintMessage("No more guesses allowed. You Lost.");
                     m_IsRestart = restartGame();
                 }
                 if (m_IsQuit)
                 {
-                    Console.WriteLine("Bye Bye :(");
+                    UI.PrintMessage("Bye Bye :(");
                 }
-
-             
             }
         }
         /// <summary>
@@ -127,13 +103,13 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 }
                 else if (intResultTryParse && choose.Equals('N'))
                 {
-                    Console.WriteLine("Bye Bye");
+                    UI.PrintMessage("Bye Bye");
                     isInvalideChoose = false;
                     isRestart = false;
                 }
                 else
                 {
-                    Console.WriteLine("invalid input :(");
+                    UI.PrintMessage("invalid input :(");
                 }
             }
             return isRestart;
@@ -145,15 +121,9 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             m_IsQuit = false;
             m_Logic.SetComChoose("");
             m_UserGuessesList.Clear();
-            m_PointsList.Clear();
+            m_ResultsList.Clear();
         }
-        private void printList(List<Guess> list)
-        {
-            foreach (Guess item in list)
-            {
-                Console.WriteLine(item.userGuess);
-            }
-        }
+     
         private Guess getGuess()
         {
             bool isInputValid = false;
@@ -161,7 +131,6 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             guess = new Guess();
             while (!isInputValid)
             {
-                //Console.WriteLine("Enter guess");
                 string numberOfGuessesStr = Console.ReadLine();
                 try
                 {
@@ -170,7 +139,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 }
                 catch (TypeException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    UI.PrintMessage(ex.Message);
                 }
                 catch (RangeException ex)
                 {
@@ -181,7 +150,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                     }
                     else
                     {
-                        Console.WriteLine(ex.Message);
+                        UI.PrintMessage(ex.Message);
                     }
                 }
             }
@@ -194,7 +163,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             int numberOfGuesses = 0;
             while (!isInputValid)
             {
-                Console.WriteLine("Enter number of guesses");
+                UI.PrintMessage("Enter number of guesses");
                 string numberOfGuessesStr = Console.ReadLine();
                 try
                 {
@@ -203,11 +172,11 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 }
                 catch (TypeException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    UI.PrintMessage(ex.Message);
                 }
                 catch (RangeException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    UI.PrintMessage(ex.Message);
                 }
             }
             return numberOfGuesses;
