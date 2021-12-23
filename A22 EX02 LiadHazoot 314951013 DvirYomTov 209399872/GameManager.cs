@@ -83,9 +83,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             bool isRestart = false;
             while (isInvalideChoose)
             {
-
-
-                Console.WriteLine("Would you like to start a new game? <Y/N>");
+                UI.PrintMessage("Would you like to start a new game? <Y/N>");
                 string chooseStr = Console.ReadLine();
                 char choose;
                 bool intResultTryParse = char.TryParse(chooseStr, out choose);
@@ -94,7 +92,6 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 {
                     isRestart = true;
                     isInvalideChoose = false;
-                    this.m_UI.ClearBoard();
                     restartFields();
                 }
                 else if (intResultTryParse && choose.Equals('N'))
@@ -115,6 +112,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         {
             m_IsWin = false;
             m_IsQuit = false;
+            this.m_UI.ClearBoard();
             m_Logic.SetComChoose("");
             m_UserGuessesList.Clear();
             m_ResultsList.Clear();
