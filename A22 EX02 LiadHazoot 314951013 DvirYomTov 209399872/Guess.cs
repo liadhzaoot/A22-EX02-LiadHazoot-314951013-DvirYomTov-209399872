@@ -17,18 +17,22 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
 
         private void guessValidation(string i_Guess)
         {
+            List<char> tempGuessRangeArray = new List<char>(s_guessRangeArray);
+            if (i_Guess.Length != k_NumberOfLettersInGuess)
+            {
+                throw new RangeException("guess has to be 4 letters");
+            }
             foreach (char letter in i_Guess)
             {
-                if (!Char.IsLetter(letter))
-                {
-                    throw new TypeException("guess wrong type");
-                }
-                if (!s_guessRangeArray.Contains(letter) || i_Guess.Length != k_NumberOfLettersInGuess)
-                {
-                    throw new RangeException("guess have to be 4 letter and in range 'A' - 'H'");
-                }
+                    if (!tempGuessRangeArray.Contains(letter))
+                    {
+                        throw new RangeException(String.Format("invalid guess: '{0}'", letter));
+                    }
+                    tempGuessRangeArray.Remove(letter);
             }
         }
+    
+
 
         public string userGuess
         {

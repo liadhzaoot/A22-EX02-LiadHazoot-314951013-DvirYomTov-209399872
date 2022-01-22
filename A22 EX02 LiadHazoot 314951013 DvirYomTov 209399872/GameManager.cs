@@ -22,7 +22,8 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
       
         public GameManager()
         {
-            m_Logic = new Logic();
+            this.m_Logic = new Logic();
+            this.m_UI = new UI();
         }
         public void GameManage()
         {
@@ -30,15 +31,10 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             while (m_IsRestart && !m_IsQuit)
             {
                 int numberOfGuesses = getNumberOfGuesses();
-                string comChoose = m_Logic.ComChooseRandomly();
-                m_UI = new UI(numberOfGuesses);
-                  
+                string comChoose = m_Logic.ComChooseRandomly();                  
                 for (int i = 0; i < numberOfGuesses; i++)
                 {
-                    
                     m_UI.DrawBoard(ref m_UserGuessesList, ref m_ResultsList);
-                    //Console.WriteLine(comChoose);
-                    UI.PrintMessage("\nPlease type your next guess or 'Q' to quit");
                     m_UserGuess = getGuess();
                     if (m_UserGuess == null)
                     {
@@ -79,8 +75,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             bool isRestart = false;
             while (isInvalideChoose)
             {
-                UI.PrintMessage("Would you like to start a new game? <Y/N>");
-                string chooseStr = Console.ReadLine();
+                string chooseStr = m_UI.GetUserInput("Would you like to start a new game? <Y/N>");
                 char choose;
                 bool intResultTryParse = char.TryParse(chooseStr, out choose);
 
@@ -121,10 +116,10 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             guess = new Guess();
             while (!isInputValid)
             {
-                string numberOfGuessesStr = Console.ReadLine();
+                string userGuess = m_UI.GetUserInput("\nPlease type your next guess or 'Q' to quit");
                 try
                 {
-                    guess.userGuess = numberOfGuessesStr;
+                    guess.userGuess = userGuess;
                     isInputValid = true;
                 }
                 catch (TypeException ex)
@@ -133,7 +128,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
                 }
                 catch (RangeException ex)
                 {
-                    if (numberOfGuessesStr.Equals("Q"))
+                    if (userGuess.Equals("Q"))
                     {
                         guess = null;
                         isInputValid = true;
@@ -153,11 +148,11 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             int numberOfGuesses = 0;
             while (!isInputValid)
             {
-                UI.PrintMessage("Enter number of guesses between 4-10");
-                string numberOfGuessesStr = Console.ReadLine();
+                string userGuess = m_UI.GetUserInput("Enter number of guesses between 4-10");
                 try
                 {
-                    numberOfGuesses = numberOfGussesValidation(numberOfGuessesStr);
+                    numberOfGuesses = numberOfGussesValidation(userGuess);
+                    m_UI.SetBoardSize(numberOfGuesses);
                     isInputValid = true;
                 }
                 catch (TypeException ex)
@@ -187,16 +182,5 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
         }
 
     }
-    //public class RangeException : Exception
-    //{
-    //    public RangeException(string message)
-    //        : base(message)
-    //    { }
-    //}
-    //public class TypeException : Exception
-    //{ 
-    //    public TypeException(string message)
-    //        : base(message)
-    //    { }
-    //}
+
 }
