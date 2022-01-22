@@ -31,12 +31,8 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             {
                 int numberOfGuesses = getNumberOfGuesses();
                 string comChoose = m_Logic.ComChooseRandomly();
-                // ------------------my check---------------------------------
-                Console.WriteLine(comChoose);
-                // -----------------------------------------------------------
                 m_UI = new UI(numberOfGuesses);
-                
-               
+                  
                 for (int i = 0; i < numberOfGuesses; i++)
                 {
                     
@@ -157,7 +153,7 @@ namespace A22_EX02_LiadHazoot_314951013_DvirYomTov_209399872
             int numberOfGuesses = 0;
             while (!isInputValid)
             {
-                UI.PrintMessage("Enter number of guesses");
+                UI.PrintMessage("Enter number of guesses between 4-10");
                 string numberOfGuessesStr = Console.ReadLine();
                 try
                 {
